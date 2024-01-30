@@ -34,6 +34,9 @@ app.use("/api/post", postRoutes);
 
 app.use("/api/comment", commentRoutes);
 
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
+
 app.use(express.static(path.join(__dirname, "/client/dist")));
 
 app.get("*", (req, res) => {
