@@ -7,7 +7,11 @@ import cookieParser from "cookie-parser";
 import postRoutes from "./routes/post.route.js";
 import commentRoutes from "./routes/comment.route.js";
 import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
@@ -33,14 +37,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/post", postRoutes);
 
 app.use("/api/comment", commentRoutes);
-
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
-
-app.use(express.static(path.join(__dirname, "/client/dist")));
-
+app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
 
 app.use((err, req, res, next) => {
